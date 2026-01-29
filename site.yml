@@ -9,6 +9,5 @@
     - nvm
     - rust
     - tailscale
-    - docker_images
     - portainer
-    - dotfiles
+    # - dotfiles

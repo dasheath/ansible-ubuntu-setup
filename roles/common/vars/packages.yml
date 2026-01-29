@@ -20,4 +20,3 @@ apt_packages:
   - clang-format
   - ca-certificates
   - gedit
-  - neovim

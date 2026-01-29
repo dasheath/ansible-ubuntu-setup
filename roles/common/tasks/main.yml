@@ -8,6 +8,7 @@
     name: "{{ apt_packages }}"
     state: present
 
+# Prepare for and install VS Code
 - name: Add Microsoft GPG key
   apt_key:
     url: https://packages.microsoft.com/keys/microsoft.asc

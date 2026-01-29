@@ -1,11 +1,6 @@
 managed_users:
   - name: heath
     groups: docker # Allows docker without sudo
+# CHANGEME - Add users as desired here
    
-
-docker_images:
-  - nginx:latest
-  - redis:latest
-  - postgres:latest
-
-dotfiles_root: /opt/repos/dotfiles
+# dotfiles_root: /opt/repos/dotfiles
