@@ -2,7 +2,7 @@
 autoinstall:
   version: 1
   identity:
-    hostname: ubuntu-dev
+    hostname: hollywoo # CHANGEME
     password: "$6$rounds=4096$EXAMPLEHASH$..."  # Optional: default root/admin password
   keyboard:
     layout: us
@@ -63,13 +63,14 @@ autoinstall:
     - curtin in-target -- apt update
     - curtin in-target -- apt install -y ansible python3-docker
 
-    # Clone repos to use here
-    - curtin in-target -- mkdir -p /opt/repos
-    - curtin in-target -- git clone https://github.com/dasheath/ansible-setup.git /opt/repos/ansible-setup
-    - curtin in-target -- git clone https://github.com/dasheath/dotfiles.git /opt/repos/dotfiles
-    # Clone your Ansible repo and run ansible-pull
-    - curtin in-target -- su - admin -c "ansible-pull -U https://github.com/dasheath/ansible-setup.git site.yml"
+#    # Clone repos to use here
+#    - curtin in-target -- mkdir -p /opt/repos
+#    - curtin in-target -- git clone https://github.com/dasheath/ansible-setup.git /opt/repos/ansible-setup
+#    - curtin in-target -- git clone https://github.com/dasheath/dotfiles.git /opt/repos/dotfiles
 
+#    # Clone your Ansible repo and run ansible-pull
+#    - curtin in-target -- su - admin -c "ansible-pull -U https://github.com/dasheath/ansible-setup.git site.yml"
+#
     # Optional: add admin user to sudoers with no password
     - curtin in-target -- bash -c 'echo "%sudo ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/90-nopasswd && chmod 440 /etc/sudoers.d/90-nopasswd'
-e
+
