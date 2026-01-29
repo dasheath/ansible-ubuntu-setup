@@ -1,0 +1,21 @@
+- name: Clone dotfiles repo for each user
+  become: true
+  become_user: "{{ item.name }}"
+  git:
+    repo: "{{ dotfiles_repo }}"
+    dest: "/home/{{ item.name }}/dotfiles"
+    version: "{{ dotfiles_branch }}"
+    update: yes
+  loop: "{{ managed_users }}"
+
+- name: Symlink dotfiles to home (optional)
+  become: true
+  become_user: "{{ item.name }}"
+  file:
+    src: "/home/{{ item.name }}/dotfiles/.{{ dotfile_name }}"
+    dest: "/home/{{ item.name }}/.{{ dotfile_name }}"
+    state: link
+    force: yes
+  loop: "{{ managed_users }}"
+  vars:
+    dotfile_name: "bashrc"   # example; you can loop over multiple dotfiles if needed

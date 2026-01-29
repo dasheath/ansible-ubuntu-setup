@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+NAME=portainer
+
+case "${1:-}" in
+  start)
+    docker start "$NAME"
+    ;;
+  stop)
+    docker stop "$NAME"
+    ;;
+  restart)
+    docker restart "$NAME"
+    ;;
+  status)
+    docker ps -a --filter "name=$NAME"
+    ;;
+  logs)
+    docker logs "$NAME"
+    ;;
+  *)
+    echo "Usage: portainerctl {start|stop|restart|status|logs}"
+    exit 1
+    ;;
+esac

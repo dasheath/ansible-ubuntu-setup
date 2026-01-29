@@ -1,0 +1,14 @@
+- hosts: localhost
+  become: true
+  roles:
+    - common
+    - users
+    - docker
+    - unattended_upgrades
+    - pyenv
+    - nvm
+    - rust
+    - tailscale
+    - docker_images
+    - portainer
+    - dotfiles

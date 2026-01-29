@@ -1,0 +1,31 @@
+- name: Install nvm for each user
+  become: true
+  become_user: "{{ item.name }}"
+  shell: |
+    curl -fsSL https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+  args:
+    creates: ~/.nvm
+  loop: "{{ managed_users }}"
+
+- name: Configure nvm in bash
+  become: true
+  become_user: "{{ item.name }}"
+  blockinfile:
+    path: ~/.bashrc
+    marker: "# {mark} NVM"
+    block: |
+      export NVM_DIR="$HOME/.nvm"
+      [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+  loop: "{{ managed_users }}"
+
+- name: Install latest Node.js
+  become: true
+  become_user: "{{ item.name }}"
+  shell: |
+    export NVM_DIR="$HOME/.nvm"
+    . "$NVM_DIR/nvm.sh"
+    nvm install node
+    nvm alias default node
+  args:
+    executable: /bin/bash
+  loop: "{{ managed_users }}"

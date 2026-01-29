@@ -1,0 +1,35 @@
+- name: Install pyenv for each user
+  become: true
+  become_user: "{{ item.name }}"
+  git:
+    repo: https://github.com/pyenv/pyenv.git
+    dest: ~/.pyenv
+    update: no
+  loop: "{{ managed_users }}"
+
+- name: Configure pyenv in bash
+  become: true
+  become_user: "{{ item.name }}"
+  blockinfile:
+    path: ~/.bashrc
+    marker: "# {mark} PYENV"
+    block: |
+      export PYENV_ROOT="$HOME/.pyenv"
+      export PATH="$PYENV_ROOT/bin:$PATH"
+      eval "$(pyenv init --path)"
+      eval "$(pyenv init -)"
+  loop: "{{ managed_users }}"
+
+- name: Install Python versions via pyenv
+  become: true
+  become_user: "{{ item.name }}"
+  shell: |
+    export PYENV_ROOT="$HOME/.pyenv"
+    export PATH="$PYENV_ROOT/bin:$PATH"
+    eval "$(pyenv init -)"
+    pyenv install -s 3.10
+    pyenv install -s $(pyenv latest 3)
+    pyenv global $(pyenv latest 3) 3.10
+  args:
+    executable: /bin/bash
+  loop: "{{ managed_users }}"

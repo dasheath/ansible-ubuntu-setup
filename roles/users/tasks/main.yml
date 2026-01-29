@@ -1,0 +1,21 @@
+#- name: Ensure admin group exists
+#  group:
+#    name: admin
+#    state: present
+
+- name: Create users
+  user:
+    name: "{{ item.name }}"
+    groups: "{{ item.groups | default([]) }}"
+    append: true
+    shell: /bin/bash
+    create_home: true
+    state: present
+  loop: "{{ managed_users }}"
+  become_user: "{{ item.name }}"
+
+#- name: Allow admin passwordless sudo
+#  copy:
+#    dest: /etc/sudoers.d/admin
+#    content: "%admin ALL=(ALL) NOPASSWD:ALL\n"
+#    mode: "0440"

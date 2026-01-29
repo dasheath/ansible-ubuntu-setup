@@ -1,0 +1,27 @@
+- name: Check if Rust is installed per user
+  become: true
+  become_user: "{{ item.name }}"
+  stat:
+    path: "/home/{{ item.name }}/.cargo/bin/rustc"
+  register: rust_installed
+  loop: "{{ managed_users }}"
+
+- name: Install Rust if missing
+  become: true
+  become_user: "{{ item.name }}"
+  shell: |
+    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+  args:
+    executable: /bin/bash
+  when: rust_installed.stat.exists == false
+  loop: "{{ managed_users }}"
+
+- name: Add Rust to bash PATH
+  become: true
+  become_user: "{{ item.name }}"
+  blockinfile:
+    path: "/home/{{ item.name }}/.bashrc"
+    marker: "# {mark} RUSTUP"
+    block: |
+      export PATH="$HOME/.cargo/bin:$PATH"
+  loop: "{{ managed_users }}"

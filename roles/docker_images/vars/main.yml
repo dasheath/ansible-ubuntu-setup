@@ -1,0 +1,15 @@
+docker_images:
+  - name: ubuntu
+    tag: "22.04"
+
+  - name: python
+    tag: "3.10"
+
+  - name: node
+    tag: "latest"
+
+  - name: postgres
+    tag: "15"
+
+  - name: redis
+    tag: "7"

@@ -1,0 +1,75 @@
+#cloud-config
+autoinstall:
+  version: 1
+  identity:
+    hostname: ubuntu-dev
+    password: "$6$rounds=4096$EXAMPLEHASH$..."  # Optional: default root/admin password
+  keyboard:
+    layout: us
+  locale: en_US
+  timezone: America/New_York
+  storage:
+    layout:
+      name: lvm
+  network:
+    network:
+      version: 2
+      ethernets:
+        enp0s3:
+          dhcp4: true
+
+  users:
+    - name: admin
+      password: "$6$rounds=4096$EXAMPLEHASH$..."
+      groups: [sudo]
+      shell: /bin/bash
+
+  packages:
+    # Core dev packages
+    - make
+    - build-essential
+    - libssl-dev
+    - zlib1g-dev
+    - libbz2-dev
+    - libreadline-dev
+    - libsqlite3-dev
+    - wget
+    - curl
+    - llvm
+    - libncurses5-dev
+    - xz-utils
+    - tk-dev
+    - libxml2-dev
+    - libxmlsec1-dev
+    - libffi-dev
+    - liblzma-dev
+    - vlc
+    - clang-format
+    - ca-certificates
+    - gedit
+    - neovim
+    - git
+    - python3-pip
+    - python3-venv
+    - docker.io
+    - gnupg
+
+  late-commands:
+    # Enable Docker service immediately
+    - curtin in-target -- systemctl enable docker
+    - curtin in-target -- systemctl start docker
+
+    # Optional: install Ansible (so ansible-pull is available immediately)
+    - curtin in-target -- apt update
+    - curtin in-target -- apt install -y ansible python3-docker
+
+    # Clone repos to use here
+    - curtin in-target -- mkdir -p /opt/repos
+    - curtin in-target -- git clone https://github.com/dasheath/ansible-setup.git /opt/repos/ansible-setup
+    - curtin in-target -- git clone https://github.com/dasheath/dotfiles.git /opt/repos/dotfiles
+    # Clone your Ansible repo and run ansible-pull
+    - curtin in-target -- su - admin -c "ansible-pull -U https://github.com/dasheath/ansible-setup.git site.yml"
+
+    # Optional: add admin user to sudoers with no password
+    - curtin in-target -- bash -c 'echo "%sudo ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/90-nopasswd && chmod 440 /etc/sudoers.d/90-nopasswd'
+e
