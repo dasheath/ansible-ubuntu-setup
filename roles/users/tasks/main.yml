@@ -1,16 +1,16 @@
-- name: Ensure admin group exists
-  group:
-    name: admin
-    state: present
-
-- name: Create users
-  user:
-    name: "{{ item.name }}"
-    groups: "{{ item.groups | default([]) }}"
-    append: true
-    shell: /bin/bash
-    create_home: true
-    state: present
-  loop: "{{ managed_users }}"
-  become_user: "{{ item.name }}"
+#- name: Ensure admin group exists
+#  group:
+#    name: admin
+#    state: present
+#
+#- name: Create users
+#  user:
+#    name: "{{ item.name }}"
+#    groups: "{{ item.groups | default([]) }}"
+#    append: true
+#    shell: /bin/bash
+#    create_home: true
+#    state: present
+#  loop: "{{ managed_users }}"
+#  become_user: "{{ item.name }}"
 

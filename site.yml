@@ -2,12 +2,10 @@
   become: true
   roles:
     - common
-    - users
     - docker
     - unattended_upgrades
     - pyenv
     - nvm
     - rust
     - tailscale
-    - portainer
     # - dotfiles

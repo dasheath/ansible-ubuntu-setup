@@ -1,0 +1,25 @@
+apt_packages:
+  - build-essential
+  - ca-certificates
+  - clang-format
+  - curl
+  - gedit
+  - git
+  - libbz2-dev
+  - libffi-dev
+  - liblzma-dev
+  - libncurses5-dev
+  - libreadline-dev
+  - libsqlite3-dev
+  - libssl-dev
+  - libxml2-dev
+  - libxmlsec1-dev
+  - llvm
+  - make
+  - python3-pip
+  - python3-venv
+  - tk-dev
+  - vlc
+  - wget
+  - xz-utils
+  - zlib1g-dev
