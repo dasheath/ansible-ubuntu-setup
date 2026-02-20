@@ -2,20 +2,21 @@
   become: true
   become_user: "{{ item.name }}"
   git:
-    repo: "{{ dotfiles_repo }}"
+    repo: "{{ dotfiles_repo_ssh }}"
     dest: "/home/{{ item.name }}/dotfiles"
     version: "{{ dotfiles_branch }}"
     update: yes
   loop: "{{ managed_users }}"
 
-- name: Symlink dotfiles to home (optional)
-  become: true
-  become_user: "{{ item.name }}"
-  file:
-    src: "/home/{{ item.name }}/dotfiles/.{{ dotfile_name }}"
-    dest: "/home/{{ item.name }}/.{{ dotfile_name }}"
-    state: link
-    force: yes
-  loop: "{{ managed_users }}"
-  vars:
-    dotfile_name: "bashrc"   # example; you can loop over multiple dotfiles if needed
+# --- Use 'stow' command for this instead
+#- name: Symlink dotfiles to home (optional)
+#  become: true
+#  become_user: "{{ item.name }}"
+#  file:
+#    src: "/home/{{ item.name }}/dotfiles/.{{ dotfile_name }}"
+#    dest: "/home/{{ item.name }}/.{{ dotfile_name }}"
+#    state: link
+#    force: yes
+#  loop: "{{ managed_users }}"
+#  vars:
+#    dotfile_name: "bashrc"   # example; you can loop over multiple dotfiles if needed

@@ -1,0 +1,67 @@
+# Ensure dependencies are there first
+- name: Ensure build dependencies are installed
+  apt:
+    name:
+      - ninja-build
+      - gettext
+      - cmake
+      - unzip
+      - curl
+      - build-essential
+      
+      # For Telescope plugin functionality
+      - ripgrep
+      - fd-find
+    state: present
+    update_cache: true
+  become: true
+
+# Check whether neovim already installed
+- name: Check if neovim installed
+  stat:
+    path: "/usr/local/src/neovim"
+  register: nvim_installed
+
+# Setup fd-find symlink
+- name: Get path to fdfind
+  command: which fdfind
+  register: fdfind_path
+  changed_when: false
+
+- name: Show resolved fdfind path
+  debug:
+    var: fdfind_path.stdout
+
+- name: Create fd symlink
+  file:
+    src: "{{ fdfind_path.stdout }}"
+    dest: /usr/local/bin/fd
+    state: link
+    force: true
+  become: true
+
+# Clone the neovim git repo into a particular spot
+- name: Clone Neovim stable branch
+  git:
+    repo: "{{ neovim_repo_ssh }}"
+    dest: /usr/local/src/neovim
+    version: "{{ neovim_tag }}"
+    depth: 1
+    update: yes
+  become: true
+  when: not nvim_installed.stat.exists
+
+# Build & Install neovim
+- name: Build Neovim
+  command: make CMAKE_BUILD_TYPE=RelWithDebInfo
+  args:
+    chdir: /usr/local/src/neovim
+  become: true
+  when: not nvim_installed.stat.exists
+
+- name: Install Neovim
+  command: make install
+  args:
+    chdir: /usr/local/src/neovim
+  become: true
+  when: not nvim_installed.stat.exists
