@@ -1,3 +1,5 @@
-dotfiles_repo_ssh: "git@github.com:dasheath/dotfiles.git"
-dotfiles_repo_http: "https://github.com/dasheath/dotfiles.git"
+dotfiles_repo_map:
+  ssh: "git@github.com:dasheath/dotfiles.git"
+  https: "https://github.com/dasheath/dotfiles.git"
+
 dotfiles_branch: "main"

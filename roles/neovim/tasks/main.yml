@@ -43,7 +43,7 @@
 # Clone the neovim git repo into a particular spot
 - name: Clone Neovim stable branch
   git:
-    repo: "{{ neovim_repo_ssh }}"
+    repo: "{{ neovim_repo_map[clone_with | default('https')] }}"
     dest: /usr/local/src/neovim
     version: "{{ neovim_tag }}"
     depth: 1

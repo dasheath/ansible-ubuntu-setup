@@ -1,3 +1,5 @@
-neovim_repo_http: "https://github.com/neovim/neovim.git"
-neovim_repo_ssh: "git@github.com:neovim/neovim.git"
+neovim_repo_map:
+  ssh: "git@github.com:neovim/neovim.git"
+  https: "https://github.com/neovim/neovim.git"
+
 neovim_tag: "stable"
