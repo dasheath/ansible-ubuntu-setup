@@ -2,5 +2,6 @@ managed_users:
   - name: heath
     groups: docker # Allows docker without sudo
 # CHANGEME - Add users as desired here
-   
-# dotfiles_root: /opt/repos/dotfiles
+
+# Use either 'https' or 'ssh'
+clone_with: ssh   
