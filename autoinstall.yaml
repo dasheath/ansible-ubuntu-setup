@@ -1,28 +1,26 @@
+---
 #cloud-config
 autoinstall:
   version: 1
   identity:
-    hostname: hollywoo # CHANGEME
-    password: "$6$rounds=4096$EXAMPLEHASH$..."  # Optional: default root/admin password
+    hostname: pastiches
+    username: admin
+    realname: Admin
+    # Replace with a hash of your password
+    # mkpasswd --method=SHA-512
+    password: "$6$yDTp9gldoo3E0k96$4.MtdLIDE.9oKU6O387yfN/6tDISjf/i0I70PoFL/JJF/j/QbzdGU8BQl5w/onKVxYFVv2WRsPQtwZoT9Ou/r."
+  storage:
+    layout:
+      name: lvm
+  ssh:
+    install-server: yes
+    allow-pw: yes
+  updates: security
+
   keyboard:
     layout: us
   locale: en_US
   timezone: America/New_York
-  storage:
-    layout:
-      name: lvm
-  network:
-    network:
-      version: 2
-      ethernets:
-        enp0s3:
-          dhcp4: true
-
-  users:
-    - name: admin
-      password: "$6$rounds=4096$EXAMPLEHASH$..."
-      groups: [sudo]
-      shell: /bin/bash
 
   packages:
     # Core dev packages
@@ -49,6 +47,7 @@ autoinstall:
     - python3-pip
     - python3-venv
     - gnupg
+    - net-tools
     
     # Docker stuff
     - docker-ce
