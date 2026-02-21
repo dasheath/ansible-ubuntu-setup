@@ -55,13 +55,6 @@ autoinstall:
     - python3-venv
     - gnupg
     - net-tools
-    
-    # Docker stuff
-    - docker-ce
-    - docker-ce-cli
-    - containerd.io
-    - docker-buildx-plugin
-    - docker-compose-plugin
 
     # For ansible
     - ansible
