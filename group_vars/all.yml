@@ -1,6 +1,5 @@
 managed_users:
   - name: heath
-    groups: docker # Allows docker without sudo
 # CHANGEME - Add users as desired here
 
 # Use either 'https' or 'ssh'

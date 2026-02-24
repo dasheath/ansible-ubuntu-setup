@@ -33,9 +33,15 @@ Feel free to either download this as a zip, or clone it from github. Again, eith
 - This can be done with ssh if you prefer. Ensure you have an ssh key that has been added to your github account.
 - Else, the github clones can be done using https by updating the `group_vars/all.yml` as described above
 
+## Setting up multiple users
+- This has only been tested by running with a single user. But it is configured such that you can add more users to the `managed_users` list in `group_vars/all.yml`
+
 ## How to run playbook:
 ```bash
 ansible-playbook --step site.yml --ask-become-pass
 ```
 
 Feel free to skip the `--step` flag to full send the entire playbook, or leave it there if you prefer to only run certain parts.
+
+## Reboot
+- Reboot after the playbook has run successfully for some of the changes to take effect.
