@@ -23,3 +23,5 @@ apt_packages:
   - vlc
   - xz-utils
   - zlib1g-dev
+  - vim
+  - meld
