@@ -10,4 +10,4 @@
     - tailscale
     - vscode
     - neovim
-    # - dotfiles
+    - dotfiles

@@ -1,10 +1,13 @@
 apt_packages:
   - build-essential
   - ca-certificates
+  - llvm
+  - make
   - clang-format
   - curl
-  - gedit
+  - wget
   - git
+  - gedit
   - libbz2-dev
   - libffi-dev
   - liblzma-dev
@@ -14,12 +17,9 @@ apt_packages:
   - libssl-dev
   - libxml2-dev
   - libxmlsec1-dev
-  - llvm
-  - make
   - python3-pip
   - python3-venv
   - tk-dev
   - vlc
-  - wget
   - xz-utils
   - zlib1g-dev

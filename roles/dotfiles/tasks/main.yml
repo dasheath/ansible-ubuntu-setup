@@ -8,15 +8,17 @@
     update: yes
   loop: "{{ managed_users }}"
 
-# --- Use 'stow' command for this instead
-#- name: Symlink dotfiles to home (optional)
-#  become: true
-#  become_user: "{{ item.name }}"
-#  file:
-#    src: "/home/{{ item.name }}/dotfiles/.{{ dotfile_name }}"
-#    dest: "/home/{{ item.name }}/.{{ dotfile_name }}"
-#    state: link
-#    force: yes
-#  loop: "{{ managed_users }}"
-#  vars:
-#    dotfile_name: "bashrc"   # example; you can loop over multiple dotfiles if needed
+- name: Install stow command
+  apt:
+    name: 
+      - stow
+    state: present
+
+- name: Stow dotfiles directory for each user
+  become: true
+  become_user: "{{ item.name }}"
+  ansible.builtin.shell:
+    cmd: stow --verbose .
+    chdir: "/home/{{ item.name }}/dotfiles"
+  loop: "{{ managed_users }}"
+

@@ -5,21 +5,16 @@
     path: "/home/{{ item.name }}/.cargo/bin/rustc"
   register: rust_installed
   loop: "{{ managed_users }}"
-  loop_control:
-    label: "{{ item.name }}"
-
 
 - name: Install Rust if missing
   become: true
-  become_user: "{{ item.name }}"
+  become_user: "{{ item.item.name }}"
   shell: |
     curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
   args:
     executable: /bin/bash
   when: not item.stat.exists | default(false)
   loop: "{{ rust_installed.results }}"
-  loop_control:
-    label: "{{ item}}"
 
 - name: Add Rust to bash PATH
   become: true
@@ -31,5 +26,3 @@
       export PATH="$HOME/.cargo/bin:$PATH"
   when: not item.stat.exists | default(false)
   loop: "{{ rust_installed.results }}"
-  loop_control:
-    label: "{{ item}}"

@@ -4,4 +4,4 @@ managed_users:
 # CHANGEME - Add users as desired here
 
 # Use either 'https' or 'ssh'
-clone_with: ssh   
+clone_with: https   
