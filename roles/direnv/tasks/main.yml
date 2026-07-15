@@ -1,0 +1,20 @@
+- name: Install direnv for each user
+  become: true
+  become_user: "{{ item.name }}"
+  shell: |
+    curl -sfL https://direnv.net/install.sh | bash
+  #args:
+    #creates: ~/.nvm
+  loop: "{{ managed_users }}"
+
+- name: Configure direnv in bash
+  become: true
+  become_user: "{{ item.name }}"
+  blockinfile:
+    path: ~/.bashrc
+    marker: "# {mark} DIRENV"
+    block: |
+      eval "$(direnv hook bash)"
+#      export NVM_DIR="$HOME/.nvm"
+#      [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+  loop: "{{ managed_users }}"
